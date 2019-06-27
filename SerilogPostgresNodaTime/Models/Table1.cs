@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using NodaTime;
 
 namespace SerilogPostgresNodaTime.Models
 {
@@ -8,6 +9,6 @@ namespace SerilogPostgresNodaTime.Models
         [Required]
         public Guid Id { get; set; }
         [Required]
-        public DateTime MyDate { get; set; }
+        public OffsetDateTime MyDate { get; set; }
     }
 }

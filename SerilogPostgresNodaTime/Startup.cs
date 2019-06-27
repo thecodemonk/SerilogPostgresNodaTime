@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using SerilogPostgresNodaTime.Models;
 
 namespace SerilogPostgresNodaTime
@@ -29,7 +30,9 @@ namespace SerilogPostgresNodaTime
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("SerilogPostgresNodaTime"), opt => opt.EnableRetryOnFailure()));
+            services.AddEntityFrameworkNpgsql().AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("SerilogPostgresNodaTime"), opt => opt.EnableRetryOnFailure().UseNodaTime()));
+
+            NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
